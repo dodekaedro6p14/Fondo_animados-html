@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(to bottom, #2d5a27, #1e3c1a);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: sans-serif;
+        }
+
+        .leaf {
+            position: absolute;
+            top: -50px;
+            color: #aaddaa;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Bosque de Hojas</h1>
+
+    <script>
+        function createLeaf() {
+            const leaf = document.createElement('div');
+            leaf.classList.add('leaf');
+            leaf.innerHTML = '🍃'; // Puedes usar '🍂' también
+            leaf.style.left = Math.random() * 100 + 'vw';
+            leaf.style.animationDuration = Math.random() * 3 + 2 + 's';
+            leaf.style.opacity = Math.random();
+            leaf.style.fontSize = Math.random() * 20 + 10 + 'px';
+            
+            document.body.appendChild(leaf);
+
+            setTimeout(() => {
+                leaf.remove();
+            }, 5000);
+        }
+        setInterval(createLeaf, 200);
+    </script>
+</body>
+</html>
