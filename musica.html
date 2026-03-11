@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+<style>
+    body {
+        margin: 0;
+        background: #121212;
+        overflow: hidden;
+        color: #ff00ff; /* Color neón para las notas */
+    }
+    .note {
+        position: absolute;
+        bottom: -50px;
+        animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+        to {
+            transform: translateY(-110vh) translateX(50px);
+            opacity: 0;
+        }
+    }
+</style>
+    
+</head>
+<body>
+    <h1>Titulo de La Pagina</h1>
+<script>
+    const notes = ['♪', '♫', '♭', '♯', '♬'];
+    function createNote() {
+        const div = document.createElement('div');
+        div.classList.add('note');
+        div.innerHTML = notes[Math.floor(Math.random() * notes.length)];
+        div.style.left = Math.random() * 100 + 'vw';
+        div.style.animationDuration = Math.random() * 2 + 3 + 's';
+        div.style.fontSize = Math.random() * 30 + 15 + 'px';
+        document.body.appendChild(div);
+        setTimeout(() => div.remove(), 4000);
+    }
+    setInterval(createNote, 150);
+</script>
+    
+</body>
+</html>

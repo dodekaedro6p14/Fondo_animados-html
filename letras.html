@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+<style>
+    body {
+        margin: 0;
+        background: black;
+        overflow: hidden;
+        font-family: 'Courier New', Courier, monospace;
+    }
+    .letter {
+        position: absolute;
+        color: #fc49ab; /* Verde Matrix */
+        top: -20px;	
+        animation: fallDown linear forwards;
+    }
+    @keyframes fallDown {
+        to { transform: translateY(105vh); }
+    }
+</style>
+    
+</head>
+<body>
+    <h1>Bosque de Hojas</h1>
+<script>
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&";
+    function createLetter() {
+        const span = document.createElement('span');
+        span.classList.add('letter');
+        span.innerText = alphabet[Math.floor(Math.random() * alphabet.length)];
+        span.style.left = Math.random() * 100 + "vw";
+        span.style.animationDuration = Math.random() * 2 + 1 + "s";
+        document.body.appendChild(span);
+        setTimeout(() => span.remove(), 3000);
+    }
+    setInterval(createLetter, 50);
+</script>
+    
+</body>
+</html>
