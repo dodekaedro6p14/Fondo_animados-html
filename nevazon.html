@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Día de Nevada</title>
+    <style>
+        body { 
+	margin: 0; 
+	background: #1a1a2e; 
+	overflow: hidden;
+	color:#ff00ff; /* color del las letras*/ 
+	}
+        .snow {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to { transform: translateY(105vh) translateX(20px); }
+        }
+    </style>
+</head>
+<body>
+<h1> Agrega el tu contenido</h1>
+    <script>
+        function createSnowflake() {
+            const flake = document.createElement('div');
+            flake.classList.add('snow');
+            flake.style.left = Math.random() * 100 + 'vw';
+            flake.style.width = flake.style.height = Math.random() * 2.5 + 2 + 'px';
+            flake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            flake.style.opacity = Math.random();
+            document.body.appendChild(flake);
+            setTimeout(() => flake.remove(), 5000);
+        }
+        setInterval(createSnowflake, 50);
+    </script>
+</body>
+</html>
