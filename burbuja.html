@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Fondo Marino</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(180deg, #001f3f, #0074D9, #7FDBFF);
+            background-size: 400% 400%;
+            animation: corrientes 15s ease infinite;
+            overflow: hidden;
+        }
+
+        @keyframes corrientes {
+            0% { background-position: 50% 0%; }
+            50% { background-position: 50% 100%; }
+            100% { background-position: 50% 0%; }
+        }
+
+        .burbuja {
+            position: absolute;
+            bottom: -50px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: subir 10s infinite linear;
+        }
+
+        @keyframes subir {
+            from { transform: translateY(0) translateX(0); opacity: 1; }
+            to { transform: translateY(-110vh) translateX(50px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        for(let i=0; i<20; i++) {
+            let b = document.createElement('div');
+            b.className = 'burbuja';
+            let size = Math.random() * 20 + 5 + 'px';
+            b.style.width = size; b.style.height = size;
+            b.style.left = Math.random() * 100 + 'vw';
+            b.style.animationDuration = Math.random() * 5 + 5 + 's';
+            b.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(b);
+        }
+    </script>
+</body>
+</html>
