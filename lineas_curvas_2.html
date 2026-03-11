@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fondo de Neón Curvo</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000; /* Fondo negro profundo */
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="neonCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('neonCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        const lines = [];
+        const lineCount = 100;
+
+        // Configuración de las líneas
+        class NeonLine {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.oldX = this.x;
+                this.oldY = this.y;
+                
+                // Velocidad y dirección
+                this.angle = Math.random() * Math.PI * 2;
+                this.velocity = Math.random() * 2 + 1;
+                this.turnSpeed = (Math.random() - 0.5) * 0.1;
+                
+                // Color neón aleatorio (H S L)
+                this.hue = Math.random() * 360;
+                this.life = 0;
+                this.maxLife = Math.random() * 100 + 100;
+            }
+
+            update() {
+                this.oldX = this.x;
+                this.oldY = this.y;
+
+                // Curvatura: cambiamos el ángulo ligeramente en cada frame
+                this.angle += this.turnSpeed;
+                
+                this.x += Math.cos(this.angle) * this.velocity;
+                this.y += Math.sin(this.angle) * this.velocity;
+
+                this.life++;
+
+                // Si se sale de la pantalla o muere, reinicia
+                if (this.life > this.maxLife || this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(this.oldX, this.oldY);
+                ctx.lineTo(this.x, this.y);
+                
+                // Efecto de brillo de neón
+                ctx.strokeStyle = `hsla(${this.hue}, 100%, 50%, 0.8)`;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = `hsl(${this.hue}, 100%, 50%)`;
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                
+                ctx.stroke();
+                ctx.closePath();
+            }
+        }
+
+        function init() {
+            resize();
+            for (let i = 0; i < lineCount; i++) {
+                lines.push(new NeonLine());
+            }
+            animate();
+        }
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            // Limpiar fondo al redimensionar
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, width, height);
+        }
+
+        function animate() {
+            // El truco del rastro: dibujamos un rectángulo semitransparente 
+            // en lugar de limpiar todo el canvas, esto deja una estela.
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, width, height);
+
+            lines.forEach(line => {
+                line.update();
+                line.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        init();
+    </script>
+</body>
+</html>
